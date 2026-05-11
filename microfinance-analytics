@@ -1,0 +1,77 @@
+# Microfinance Analytics Workflows with Miller
+
+Miller can be used for operational analytics, repayment monitoring, portfolio analysis, and branch-level reporting using CSV datasets.
+
+## Example Dataset
+
+```csv
+officer,branch,customer,expected_payment,actual_payment,status
+John,Nairobi,Alice,50000,47000,Late
+Mary,Nakuru,Bob,62000,62000,Paid
+Alex,Eldoret,Chris,45000,40000,Late
+Jane,Kisumu,Diana,70000,69000,Paid
+```
+
+---
+
+# Calculate Payment Variance
+
+```bash
+mlr --csv put '$variance = $expected_payment - $actual_payment' loans.csv
+```
+
+---
+
+# Calculate Collection Rate
+
+```bash
+mlr --csv put '$collection_rate = ($actual_payment / $expected_payment) * 100' loans.csv
+```
+
+---
+
+# Branch-Level Performance Summary
+
+```bash
+mlr --csv stats1 -a sum -f expected_payment,actual_payment -g branch loans.csv
+```
+
+---
+
+# Officer Ranking by Collections
+
+```bash
+mlr --csv sort -nr actual_payment loans.csv
+```
+
+---
+
+# Filter Late Payments
+
+```bash
+mlr --csv filter '$status == "Late"' loans.csv
+```
+
+---
+
+# Convert CSV to JSON
+
+```bash
+mlr --c2j cat loans.csv
+```
+
+---
+
+# Why Miller is Useful for Financial Analytics
+
+Miller provides fast and memory-efficient processing for large CSV and JSON datasets commonly used in financial reporting and operational analytics.
+
+Typical use cases include:
+
+- Loan portfolio analysis
+- Repayment monitoring
+- Branch performance reporting
+- Data cleaning pipelines
+- ETL preprocessing
+- Collections tracking
+- Analytics automation
